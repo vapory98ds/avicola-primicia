@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta http-equiv="X-Frame-Options" content="DENY">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Avícola Primicia | Sitio Oficial</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700;900&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <style>
+        :root { --rojo: #8B0000; --oro: #C5A059; --oscuro: #121212; --blanco: #ffffff; --gris: #f8f9fa; }
+        body { font-family: 'Inter', sans-serif; background-color: var(--gris); margin: 0; color: var(--oscuro); scroll-behavior: smooth; }
+
+        /* HEADER & HERO */
+        .hero { 
+            height: 60vh; 
+            background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.8)), 
+                        url('https://images.unsplash.com/photo-1548550023-2bdb3c5beed7?auto=format&fit=crop&w=1500&q=80');
+            background-size: cover; background-position: center;
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            text-align: center; color: var(--blanco); border-bottom: 5px solid var(--oro);
+        }
+        .hero h1 { font-size: clamp(2.2rem, 8vw, 4rem); font-weight: 900; margin: 0; letter-spacing: -2px; }
+        .hero p { color: var(--oro); letter-spacing: 4px; font-size: 0.9rem; font-weight: 300; text-transform: uppercase; }
+
+        /* SECCIÓN DE TRES PUNTOS CLAVE (CALIDAD) */
+        .features { 
+            display: flex; justify-content: center; gap: 20px; 
+            max-width: 1000px; margin: -50px auto 40px; padding: 0 20px;
+        }
+        .feat-card { 
+            background: var(--blanco); padding: 25px; border-radius: 15px; flex: 1;
+            text-align: center; box-shadow: 0 10px 30px rgba(0,0,0,0.1); border-bottom: 3px solid var(--oro);
+            transition: 0.3s;
+        }
+        .feat-card:hover { transform: translateY(-5px); }
+        .feat-card span { font-size: 2.5rem; display: block; margin-bottom: 10px; }
+        .feat-card h4 { margin: 0; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 1px; }
+        .feat-card p { font-size: 0.75rem; color: #666; margin-top: 8px; line-height: 1.4; }
+
+        /* HISTORIA Y FUNDADOR */
+        .about { padding: 60px 20px; max-width: 1000px; margin: 0 auto; display: grid; grid-template-columns: 1.2fr 0.8fr; gap: 40px; align-items: center; }
+        .about-text h2 { font-size: 2rem; border-left: 5px solid var(--rojo); padding-left: 15px; margin-bottom: 20px; }
+        .about-text p { line-height: 1.7; color: #444; }
+        .fundador-box { background: var(--oscuro); color: white; padding: 35px; border-radius: 20px; border-bottom: 5px solid var(--oro); }
+        .fundador-box h4 { margin: 0; color: var(--oro); font-size: 1.5rem; }
+        .fundador-box small { color: #aaa; text-transform: uppercase; letter-spacing: 1px; }
+
+        /* CONTENEDOR DE PEDIDO */
+        .order-section { background: white; padding: 80px 20px; }
+        .main-content { max-width: 1100px; margin: 0 auto; display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 40px; }
+
+        .card { background: var(--gris); padding: 40px; border-radius: 25px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); }
+        label { display: block; font-size: 0.75rem; font-weight: 800; color: #666; margin-bottom: 8px; text-transform: uppercase; }
+        input, select { width: 100%; padding: 14px; border: 2px solid #ddd; border-radius: 12px; font-size: 1rem; margin-bottom: 20px; box-sizing: border-box; }
+        .btn-order { background: var(--oscuro); color: white; border: none; width: 100%; padding: 20px; border-radius: 12px; font-weight: 700; cursor: pointer; font-size: 1.1rem; transition: 0.3s; }
+        .btn-order:hover { background: var(--rojo); }
+
+        /* RECIBO TICKET */
+        #receipt-area { display: none; }
+        #recibo { 
+            background: #fff; padding: 40px; position: relative; width: 100%; max-width: 320px; margin: 0 auto; 
+            box-shadow: 0 0 50px rgba(0,0,0,0.1); border: 1px solid #eee;
+        }
+        #recibo::after { 
+            content: ""; position: absolute; bottom: -10px; left: 0; right: 0; height: 10px; 
+            background: linear-gradient(-45deg, transparent 5px, #fff 5px), linear-gradient(45deg, transparent 5px, #fff 5px); 
+            background-size: 10px 10px; 
+        }
+        .t-header { text-align: center; border-bottom: 2px solid #000; padding-bottom: 15px; margin-bottom: 20px; }
+        .t-row { display: flex; justify-content: space-between; margin-bottom: 10px; font-size: 0.85rem; }
+        .t-total { background: var(--oscuro); color: #fff; padding: 15px; border-radius: 5px; display: flex; justify-content: space-between; align-items: center; margin-top: 20px; }
+        .t-total strong { font-size: 1.4rem; color: var(--oro); }
+
+        footer { background: var(--oscuro); color: #666; padding: 40px 20px; text-align: center; font-size: 0.9rem; }
+        footer b { color: var(--oro); }
+
+        @media (max-width: 850px) { .about, .main-content { grid-template-columns: 1fr; } .features { flex-direction: column; margin-top: -30px; } }
+    </style>
+</head>
+<body>
+
+<header class="hero">
+    <h1>AVÍCOLA PRIMICIA</h1>
+    <p>Excelencia • Compromiso • Familia</p>
+</header>
+
+<section class="features">
+    <div class="feat-card">
+        <span>🐔</span>
+        <h4>Pollo Fresco</h4>
+        <p>Procesado bajo pedido para garantizar la máxima frescura en su mesa.</p>
+    </div>
+    <div class="feat-card">
+        <span>📍</span>
+        <h4>Guastatoya</h4>
+        <p>Orgullosamente locales, sirviendo a nuestra comunidad con integridad.</p>
+    </div>
+    <div class="feat-card">
+        <span>⭐</span>
+        <h4>Calidad Oro</h4>
+        <p>Selección premium bajo la supervisión directa de nuestra familia.</p>
+    </div>
+</section>
+
+<section class="about">
+    <div class="about-text">
+        <h2>Nuestra Historia</h2>
+        <p>Avícola Primicia nació con el objetivo de elevar el estándar del producto avícola en El Progreso. No somos solo una granja; somos una tradición familiar dedicada a la crianza responsable y al servicio excepcional.</p>
+        <p>Cada pollo que entregamos lleva el sello de compromiso de <b>Vilmer López</b>, asegurando que su familia reciba solo lo mejor.</p>
+    </div>
+    <div class="fundador-box">
+        <small>Fundador & Propietario</small>
+        <h4>Vilmer López</h4>
+        <p style="font-size: 0.9rem; font-style: italic; margin-top: 15px; opacity: 0.9;">"La excelencia no es un acto, es un hábito que practicamos cada mañana en nuestra granja."</p>
+    </div>
+</section>
+
+<section class="order-section">
+    <div class="main-content">
+        <div class="card">
+            <h2 style="margin-top:0;">Realizar Pedido</h2>
+            <label>Tipo de Cliente</label>
+            <select id="tipoCliente">
+                <option value="FINAL">Cliente Final (Q15.00 lb)</option>
+                <option value="REVENDEDOR">Revendedor (Q13.00 lb - Min. 25 lbs)</option>
+            </select>
+            <label>Nombre Completo</label><input type="text" id="nombre" maxlength="50">
+            <label>WhatsApp</label><input type="number" id="tel">
+            <label>Dirección de Entrega</label><input type="text" id="dir" maxlength="100">
+            <div style="display: flex; gap: 15px;">
+                <div style="flex:1;"><label>Lbs</label><input type="number" id="lbs" value="1"></div>
+                <div style="flex:1;"><label>Servicio</label>
+                    <select id="env">
+                        <option value="RECOGER">Pasar a Recoger</option>
+                        <option value="DOMICILIO">A Domicilio (Q25)</option>
+                    </select>
+                </div>
+            </div>
+            <button class="btn-order" onclick="generar()">PROCESAR TICKET SEGURO</button>
+        </div>
+
+        <div id="receipt-area">
+            <div id="recibo">
+                <div class="t-header"><h3>AVÍCOLA PRIMICIA</h3><small>RECIBO DE CONTROL</small></div>
+                <div class="t-row"><b>Folio:</b><span id="r-folio"></span></div>
+                <div class="t-row"><b>Cliente:</b><span id="r-nom"></span></div>
+                <div class="t-row"><b>Entrega:</b><span id="r-metodo"></span></div>
+                <div style="border-top: 1px dashed #ccc; margin: 15px 0;"></div>
+                <div class="t-row"><span>Pollo Fresco</span><span id="r-precio"></span></div>
+                <div class="t-row"><span>Logística</span><span id="r-env"></span></div>
+                <div class="t-total"><span>TOTAL</span><strong id="r-tot"></strong></div>
+                <p style="text-align:center; font-size:0.6rem; color:#999; margin-top:25px; text-transform:uppercase;">Vilmer López • Garantía de Familia</p>
+            </div>
+            <button class="btn-order" style="background:#25D366; margin-top:20px;" onclick="enviar()">CONFIRMAR WHATSAPP</button>
+        </div>
+    </div>
+</section>
+
+<footer>
+    <p>&copy; 2026 <b>Avícola Primicia</b>. Todos los derechos reservados. <br> Guastatoya, El Progreso. Propiedad de Vilmer López.</p>
+</footer>
+
+<script>
+    // Variables Seguras
+    const P_FINAL = 15;
+    const P_REVEN = 13;
+    const C_ENVIO = 25;
+    const GOOGLE_URL = "https://script.google.com/macros/s/AKfycbxE_oR6eiFbh5N6DZc6NyCC9GWoGkS1kVzgdqA6xHjZUz2pAU5DXA0RnKTT4sn9G1e6bA/exec"; 
+    const MI_NUMERO = "50256308725"; 
+
+    function clean(str) { return str.replace(/[^\w. ]/gi, e => '&#' + e.charCodeAt(0) + ';'); }
+
+    function generar() {
+        const rawNom = document.getElementById('nombre').value.trim();
+        const rawDir = document.getElementById('dir').value.trim();
+        const tel = document.getElementById('tel').value;
+        const lbs = Math.abs(parseFloat(document.getElementById('lbs').value)) || 0;
+        const tipo = document.getElementById('tipoCliente').value;
+        const entrega = document.getElementById('env').value;
+
+        if(rawNom.length < 3 || !tel) { alert("⚠️ Por favor complete sus datos."); return; }
+        if(tipo === "REVENDEDOR" && lbs < 25) { alert("⚠️ Mínimo 25 lbs para precio de revendedor."); return; }
+
+        const pUnit = (tipo === "REVENDEDOR") ? P_REVEN : P_FINAL;
+        const cEnv = (entrega === "DOMICILIO") ? C_ENVIO : 0;
+        const folio = "PR-" + Date.now().toString().slice(-6);
+        const total = (lbs * pUnit + cEnv).toFixed(2);
+
+        document.getElementById('r-folio').innerText = folio;
+        document.getElementById('r-nom').innerText = clean(rawNom).toUpperCase();
+        document.getElementById('r-metodo').innerText = (entrega === "DOMICILIO") ? "A DOMICILIO" : "RECOGER LOCAL";
+        document.getElementById('r-precio').innerText = lbs + " Lbs x Q" + pUnit;
+        document.getElementById('r-env').innerText = "Q" + cEnv.toFixed(2);
+        document.getElementById('r-tot').innerText = "Q" + total;
+
+        document.getElementById('receipt-area').style.display = 'block';
+        window.location.href = "#receipt-area";
+
+        // Google Sheets
+        fetch(`${GOOGLE_URL}?${new URLSearchParams({fecha: new Date().toLocaleString(), folio, nombre: rawNom, telefono: tel, direccion: rawDir, total: "Q"+total}).toString()}`, { method: 'POST', mode: 'no-cors' });
+    }
+
+    function enviar() {
+        html2canvas(document.getElementById('recibo'), { scale: 3 }).then(canvas => {
+            const link = document.createElement('a');
+            link.download = `Ticket_${document.getElementById('r-folio').innerText}.png`;
+            link.href = canvas.toDataURL(); link.click();
+
+            const msg = encodeURIComponent(`*📦 PEDIDO AVÍCOLA PRIMICIA*\n*Folio:* ${document.getElementById('r-folio').innerText}\n*Cliente:* ${document.getElementById('r-nom').innerText}\n*Total:* ${document.getElementById('r-tot').innerText}\n\n_Calidad Vilmer López_`);
+            window.open(`https://wa.me/${MI_NUMERO}?text=${msg}`);
+        });
+    }
+</script>
+</body>
+</html>
