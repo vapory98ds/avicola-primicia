@@ -81,33 +81,20 @@
 </header>
 
 <section class="features">
-    <div class="feat-card">
-        <span>🐔</span>
-        <h4>Pollo Fresco</h4>
-        <p>Procesado bajo pedido para garantizar la máxima frescura en su mesa.</p>
-    </div>
-    <div class="feat-card">
-        <span>📍</span>
-        <h4>Guastatoya</h4>
-        <p>Orgullosamente locales, sirviendo a nuestra comunidad con integridad.</p>
-    </div>
-    <div class="feat-card">
-        <span>⭐</span>
-        <h4>Calidad Oro</h4>
-        <p>Selección premium bajo la supervisión directa de nuestra familia.</p>
-    </div>
+    <div class="feat-card"><span>🐔</span><h4>Pollo Fresco</h4><p>Procesado bajo pedido para frescura total.</p></div>
+    <div class="feat-card"><span>📍</span><h4>Guastatoya</h4><p>Sirviendo con integridad a la comunidad.</p></div>
+    <div class="feat-card"><span>⭐</span><h4>Calidad Oro</h4><p>Selección premium familiar.</p></div>
 </section>
 
 <section class="about">
     <div class="about-text">
         <h2>Nuestra Historia</h2>
-        <p>Avícola Primicia nació con el objetivo de elevar el estándar del producto avícola en El Progreso. No somos solo una granja; somos una tradición familiar dedicada a la crianza responsable y al servicio excepcional.</p>
-        <p>Cada pollo que entregamos lleva el sello de compromiso de <b>Vilmer López</b>, asegurando que su familia reciba solo lo mejor.</p>
+        <p>Una tradición familiar liderada por <b>Vilmer López</b>, dedicada a la crianza responsable y al servicio excepcional en El Progreso.</p>
     </div>
     <div class="fundador-box">
         <small>Fundador & Propietario</small>
         <h4>Vilmer López</h4>
-        <p style="font-size: 0.9rem; font-style: italic; margin-top: 15px; opacity: 0.9;">"La excelencia no es un acto, es un hábito que practicamos cada mañana en nuestra granja."</p>
+        <p style="font-size: 0.8rem; font-style: italic; margin-top: 10px; opacity: 0.8;">"Excelencia en cada entrega."</p>
     </div>
 </section>
 
@@ -120,9 +107,9 @@
                 <option value="FINAL">Cliente Final (Q15.00 lb)</option>
                 <option value="REVENDEDOR">Revendedor (Q13.00 lb - Min. 25 lbs)</option>
             </select>
-            <label>Nombre Completo</label><input type="text" id="nombre" maxlength="50">
+            <label>Nombre Completo</label><input type="text" id="nombre">
             <label>WhatsApp</label><input type="number" id="tel">
-            <label>Dirección de Entrega</label><input type="text" id="dir" maxlength="100">
+            <label>Dirección de Entrega</label><input type="text" id="dir">
             <div style="display: flex; gap: 15px;">
                 <div style="flex:1;"><label>Lbs</label><input type="number" id="lbs" value="1"></div>
                 <div style="flex:1;"><label>Servicio</label>
@@ -132,7 +119,7 @@
                     </select>
                 </div>
             </div>
-            <button class="btn-order" onclick="generar()">PROCESAR TICKET SEGURO</button>
+            <button class="btn-order" onclick="generar()">PROCESAR TICKET</button>
         </div>
 
         <div id="receipt-area">
@@ -142,10 +129,10 @@
                 <div class="t-row"><b>Cliente:</b><span id="r-nom"></span></div>
                 <div class="t-row"><b>Entrega:</b><span id="r-metodo"></span></div>
                 <div style="border-top: 1px dashed #ccc; margin: 15px 0;"></div>
-                <div class="t-row"><span>Pollo Fresco</span><span id="r-precio"></span></div>
-                <div class="t-row"><span>Logística</span><span id="r-env"></span></div>
+                <div class="t-row"><span>Producto:</span><span id="r-precio"></span></div>
+                <div class="t-row"><span>Logística:</span><span id="r-env"></span></div>
                 <div class="t-total"><span>TOTAL</span><strong id="r-tot"></strong></div>
-                <p style="text-align:center; font-size:0.6rem; color:#999; margin-top:25px; text-transform:uppercase;">Vilmer López • Garantía de Familia</p>
+                <p style="text-align:center; font-size:0.6rem; color:#999; margin-top:25px;">Vilmer López • Garantía de Familia</p>
             </div>
             <button class="btn-order" style="background:#25D366; margin-top:20px;" onclick="enviar()">CONFIRMAR WHATSAPP</button>
         </div>
@@ -153,61 +140,54 @@
 </section>
 
 <footer>
-    <p>&copy; 2026 <b>Avícola Primicia</b>. Todos los derechos reservados. <br> Guastatoya, El Progreso. Propiedad de Vilmer López.</p>
+    <p>&copy; 2026 <b>Avícola Primicia</b>. Propiedad de Vilmer López.</p>
 </footer>
 
 <script>
-    // Variables
     const P_FINAL = 15;
     const P_REVEN = 13;
     const C_ENVIO = 25;
-    // REEMPLAZA ESTE LINK POR EL DE TU NUEVA IMPLEMENTACIÓN DE GOOGLE
-    const GOOGLE_URL = "https://script.google.com/macros/s/AKfycbwpfKranq1DSVgLREx1rHWcSJDyDsalykgv1SQwxaN9pWB17C6L3whqmUdG7G24oG0-WA/exec"; 
+    const GOOGLE_URL = "https://script.google.com/macros/s/AKfycbwVQlVEbmD4yPb2GLqVHwUT5Hd2wqe1WRqDZGBIx4O2RmAcDZ4fSr-pheeWArzKuYfo/exec"; 
     const MI_NUMERO = "50232239315"; 
 
     function generar() {
-        const rawNom = document.getElementById('nombre').value.trim();
-        const rawDir = document.getElementById('dir').value.trim();
+        const nom = document.getElementById('nombre').value.trim();
+        const dir = document.getElementById('dir').value.trim();
         const tel = document.getElementById('tel').value;
         const lbs = Math.abs(parseFloat(document.getElementById('lbs').value)) || 0;
         const tipo = document.getElementById('tipoCliente').value;
         const entrega = document.getElementById('env').value;
 
-        if(rawNom.length < 3 || !tel) { alert("⚠️ Por favor complete sus datos."); return; }
-        if(tipo === "REVENDEDOR" && lbs < 25) { alert("⚠️ Mínimo 25 lbs para precio de revendedor."); return; }
+        if(!nom || !tel) { alert("⚠️ Completa tus datos."); return; }
+        if(tipo === "REVENDEDOR" && lbs < 25) { alert("⚠️ Mínimo 25 lbs para revendedor."); return; }
 
         const pUnit = (tipo === "REVENDEDOR") ? P_REVEN : P_FINAL;
         const cEnv = (entrega === "DOMICILIO") ? C_ENVIO : 0;
         const folio = "PR-" + Date.now().toString().slice(-6);
         const total = (lbs * pUnit + cEnv).toFixed(2);
 
-        // Llenar Recibo Visual
         document.getElementById('r-folio').innerText = folio;
-        document.getElementById('r-nom').innerText = rawNom.toUpperCase();
+        document.getElementById('r-nom').innerText = nom.toUpperCase();
         document.getElementById('r-metodo').innerText = (entrega === "DOMICILIO") ? "A DOMICILIO" : "RECOGER LOCAL";
         document.getElementById('r-precio').innerText = lbs + " Lbs x Q" + pUnit;
         document.getElementById('r-env').innerText = "Q" + cEnv.toFixed(2);
         document.getElementById('r-tot').innerText = "Q" + total;
 
         document.getElementById('receipt-area').style.display = 'block';
-        window.location.href = "#receipt-area";
 
-        // ENVÍO A GOOGLE SHEETS (Corregido para p.libras y p.envio)
+        // Envío a Google
         const params = new URLSearchParams({
             fecha: new Date().toLocaleString(),
             folio: folio,
-            nombre: rawNom,
+            nombre: nom,
             telefono: tel,
-            direccion: rawDir,
-            libras: lbs,        
-            envio: "Q" + cEnv,  
+            direccion: dir,
+            libras: lbs,
+            envio: "Q" + cEnv,
             total: "Q" + total
-        }).toString();
-
-        fetch(`${GOOGLE_URL}?${params}`, { 
-            method: 'POST', 
-            mode: 'no-cors' 
         });
+
+        fetch(`${GOOGLE_URL}?${params.toString()}`, { method: 'POST', mode: 'no-cors' });
     }
 
     function enviar() {
@@ -216,8 +196,17 @@
             link.download = `Ticket_${document.getElementById('r-folio').innerText}.png`;
             link.href = canvas.toDataURL(); link.click();
 
-            const msg = encodeURIComponent(`*📦 PEDIDO AVÍCOLA PRIMICIA*\n*Folio:* ${document.getElementById('r-folio').innerText}\n*Cliente:* ${document.getElementById('r-nom').innerText}\n*Total:* ${document.getElementById('r-tot').innerText}\n\n_Calidad Vilmer López_`);
-            window.open(`https://wa.me/${MI_NUMERO}?text=${msg}`);
+            const textoWhatsApp = `*📦 NUEVO PEDIDO - AVÍCOLA PRIMICIA*
+*Folio:* ${document.getElementById('r-folio').innerText}
+*Cliente:* ${document.getElementById('r-nom').innerText}
+*Pedido:* ${document.getElementById('r-precio').innerText}
+*Entrega:* ${document.getElementById('r-metodo').innerText}
+*Dirección:* ${document.getElementById('dir').value || "Recoger en local"}
+*Total:* ${document.getElementById('r-tot').innerText}
+
+_Calidad Vilmer López_`;
+
+            window.open(`https://wa.me/${MI_NUMERO}?text=${encodeURIComponent(textoWhatsApp)}`);
         });
     }
 </script>
