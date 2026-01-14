@@ -23,7 +23,7 @@
         .hero h1 { font-size: clamp(2.2rem, 8vw, 4rem); font-weight: 900; margin: 0; letter-spacing: -2px; }
         .hero p { color: var(--oro); letter-spacing: 4px; font-size: 0.9rem; font-weight: 300; text-transform: uppercase; }
 
-        /* SECCIÓN DE TRES PUNTOS CLAVE (CALIDAD) */
+        /* SECCIÓN DE TRES PUNTOS CLAVE */
         .features { 
             display: flex; justify-content: center; gap: 20px; 
             max-width: 1000px; margin: -50px auto 40px; padding: 0 20px;
@@ -61,11 +61,6 @@
         #recibo { 
             background: #fff; padding: 40px; position: relative; width: 100%; max-width: 320px; margin: 0 auto; 
             box-shadow: 0 0 50px rgba(0,0,0,0.1); border: 1px solid #eee;
-        }
-        #recibo::after { 
-            content: ""; position: absolute; bottom: -10px; left: 0; right: 0; height: 10px; 
-            background: linear-gradient(-45deg, transparent 5px, #fff 5px), linear-gradient(45deg, transparent 5px, #fff 5px); 
-            background-size: 10px 10px; 
         }
         .t-header { text-align: center; border-bottom: 2px solid #000; padding-bottom: 15px; margin-bottom: 20px; }
         .t-row { display: flex; justify-content: space-between; margin-bottom: 10px; font-size: 0.85rem; }
@@ -162,14 +157,13 @@
 </footer>
 
 <script>
-    // Variables Seguras
+    // Variables
     const P_FINAL = 15;
     const P_REVEN = 13;
     const C_ENVIO = 25;
-    const GOOGLE_URL = "https://script.google.com/macros/s/AKfycbxE_oR6eiFbh5N6DZc6NyCC9GWoGkS1kVzgdqA6xHjZUz2pAU5DXA0RnKTT4sn9G1e6bA/exec"; 
-    const MI_NUMERO = "50256308725"; 
-
-    function clean(str) { return str.replace(/[^\w. ]/gi, e => '&#' + e.charCodeAt(0) + ';'); }
+    // REEMPLAZA ESTE LINK POR EL DE TU NUEVA IMPLEMENTACIÓN DE GOOGLE
+    const GOOGLE_URL = "https://script.google.com/macros/s/AKfycbwpfKranq1DSVgLREx1rHWcSJDyDsalykgv1SQwxaN9pWB17C6L3whqmUdG7G24oG0-WA/exec"; 
+    const MI_NUMERO = "50232239315"; 
 
     function generar() {
         const rawNom = document.getElementById('nombre').value.trim();
@@ -187,8 +181,9 @@
         const folio = "PR-" + Date.now().toString().slice(-6);
         const total = (lbs * pUnit + cEnv).toFixed(2);
 
+        // Llenar Recibo Visual
         document.getElementById('r-folio').innerText = folio;
-        document.getElementById('r-nom').innerText = clean(rawNom).toUpperCase();
+        document.getElementById('r-nom').innerText = rawNom.toUpperCase();
         document.getElementById('r-metodo').innerText = (entrega === "DOMICILIO") ? "A DOMICILIO" : "RECOGER LOCAL";
         document.getElementById('r-precio').innerText = lbs + " Lbs x Q" + pUnit;
         document.getElementById('r-env').innerText = "Q" + cEnv.toFixed(2);
@@ -197,8 +192,22 @@
         document.getElementById('receipt-area').style.display = 'block';
         window.location.href = "#receipt-area";
 
-        // Google Sheets
-        fetch(`${GOOGLE_URL}?${new URLSearchParams({fecha: new Date().toLocaleString(), folio, nombre: rawNom, telefono: tel, direccion: rawDir, total: "Q"+total}).toString()}`, { method: 'POST', mode: 'no-cors' });
+        // ENVÍO A GOOGLE SHEETS (Corregido para p.libras y p.envio)
+        const params = new URLSearchParams({
+            fecha: new Date().toLocaleString(),
+            folio: folio,
+            nombre: rawNom,
+            telefono: tel,
+            direccion: rawDir,
+            libras: lbs,        
+            envio: "Q" + cEnv,  
+            total: "Q" + total
+        }).toString();
+
+        fetch(`${GOOGLE_URL}?${params}`, { 
+            method: 'POST', 
+            mode: 'no-cors' 
+        });
     }
 
     function enviar() {
