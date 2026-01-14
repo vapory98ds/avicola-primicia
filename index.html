@@ -108,7 +108,11 @@
                 <option value="REVENDEDOR">Revendedor (Q13.00 lb - Min. 25 lbs)</option>
             </select>
             <label>Nombre Completo</label><input type="text" id="nombre">
-            <label>WhatsApp</label><input type="number" id="tel">
+            
+            <label>WhatsApp (8 dígitos)</label>
+            <input type="number" id="tel" placeholder="Ej: 55554444" 
+                   oninput="if(this.value.length > 8) this.value = this.value.slice(0, 8);">
+            
             <label>Dirección de Entrega</label><input type="text" id="dir">
             <div style="display: flex; gap: 15px;">
                 <div style="flex:1;"><label>Lbs</label><input type="number" id="lbs" value="1"></div>
@@ -153,12 +157,21 @@
     function generar() {
         const nom = document.getElementById('nombre').value.trim();
         const dir = document.getElementById('dir').value.trim();
-        const tel = document.getElementById('tel').value;
+        const tel = document.getElementById('tel').value.toString(); // Convertimos a texto para validar
         const lbs = Math.abs(parseFloat(document.getElementById('lbs').value)) || 0;
         const tipo = document.getElementById('tipoCliente').value;
         const entrega = document.getElementById('env').value;
 
-        if(!nom || !tel) { alert("⚠️ Completa tus datos."); return; }
+        // MEJORA: Regla para 8 dígitos y que empiece con 3, 4, 5 o 7
+        const regexGuate = /^[3457]\d{7}$/;
+
+        if(!nom) { alert("⚠️ Por favor ingresa tu nombre."); return; }
+        
+        if(!regexGuate.test(tel)) { 
+            alert("⚠️ El número de WhatsApp no es válido.\n\nDebe tener 8 dígitos y empezar con 3, 4, 5 o 7."); 
+            return; 
+        }
+
         if(tipo === "REVENDEDOR" && lbs < 25) { alert("⚠️ Mínimo 25 lbs para revendedor."); return; }
 
         const pUnit = (tipo === "REVENDEDOR") ? P_REVEN : P_FINAL;
@@ -212,4 +225,3 @@ _Calidad Vilmer López_`;
 </script>
 </body>
 </html>
-
